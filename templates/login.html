@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block child_text %}
+<hr>
+<h1>这里是登录版块</h1>
+<form method="post" action="">
+    {% csrf_token %}
+
+    用户名：
+    <input type="text" name="username">
+
+    密码：
+    <input type="text" name="password">
+
+    提交<input type="submit">
+</form>
+<hr>
+<h1>这是注册版块</h1>
+<form method="post">
+    {% csrf_token %}
+
+    用户名：
+    <input type="text" name="username" id="register_name">
+
+    密码：
+    <input type="text" name="password" id="register_pwd">
+
+    提交<input type="submit" id="register_submit">
+
+    <script>
+        function register_user() {
+            $.ajax({
+                type: "post", // 以post方式发起请求
+                url: "/register_user", // 你的请求链接
+                data: { // 提交数据
+                    "username": $("#register_name").val(), // 用 jq 的形式获取值
+                    "password": $("#register_pwd").val(),
+                    "csrfmiddlewaretoken": $("input[name='csrfmiddlewaretoken']").val()
+                },
+                success: function (response) {   // 执行函数
+                    alert(response['message'])  // 弹窗显示response信息
+                    location.reload()        // 执行异步刷新
+                }
+            })
+        }
+
+        $("#register_submit").click(function () {
+            register_user()
+        })  // 点击时执行 ajax 函数
+
+    </script>
+</form>
+
+
+<hr>
+
+{% endblock %}

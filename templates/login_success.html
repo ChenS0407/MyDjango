@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>恭喜你登录成功</h1>
+<form method="post" action="exit">
+    {% csrf_token %}
+
+    登出<input type="submit">
+</form>
+
+</body>
+</html>

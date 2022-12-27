@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+
+{% block child_text%}
+    <p class="update" id="username">用户名:{{ username }}</p>
+    <p class="update" id="status">状态:{{ status }}</p>
+    <hr>
+    <button id="update_button" type="button">点我提交修改</button>
+<script>
+        function update_user() {
+            $.ajax({
+                type: "post", // 以post方式发起请求
+                url: "/update_user", // 你的请求链接
+                data: { // 提交数据
+                    "status": $("#status").val(), // 用 jq 的形式获取值
+                    "csrfmiddlewaretoken": "{{ csrf_token }}"
+                },
+                success: function (response) {   // 执行函数
+                    alert(response['message'])  // 弹窗显示response信息
+                    location.reload()        // 执行异步刷新
+                }
+            })
+        }
+
+
+
+$(".update").click(function () {
+    $("#status").replaceWith("<input id='status' value='"+$("#status").html().split(":")[1]+"'>")
+    $("#update_button").click(function () {
+        update_user()
+    })
+
+
+})
+
+
+</script>
+{% endblock %}
